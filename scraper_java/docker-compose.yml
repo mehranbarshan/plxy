@@ -1,3 +1,4 @@
+version: '3.8'
 
 services:
   n8n:
@@ -17,8 +18,8 @@ services:
       - N8N_PROTOCOL=http
     volumes:
       - n8n_data:/home/node/.n8n
-      - n8n_sessions:/home/node/sessions       # session persist
-      - C:/Users/top/Desktop/plxy/scraper_java:/scripts
+      - n8n_sessions:/home/node/sessions
+      - /home/administrator/scripts:/scripts   # فولدر WSL/scripts mount شده روی کانتینر
     restart: unless-stopped
 
   mymongo:
