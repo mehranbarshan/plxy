@@ -1,0 +1,36 @@
+
+services:
+  n8n:
+    build: .
+    container_name: n8n-python
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BLOCK_NODES_EXECUTION=false
+      - NODES_EXCLUDE=[]
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin123
+      - N8N_ENCRYPTION_KEY=some-random-long-string-123456789
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - n8n_sessions:/home/node/sessions       # session persist
+      - C:/Users/top/Desktop/plxy/scraper_java:/scripts
+    restart: unless-stopped
+
+  mymongo:
+    image: mongo:7
+    container_name: mymongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  n8n_data:
+  n8n_sessions:
+  mongodb_data:

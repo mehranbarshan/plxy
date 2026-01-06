@@ -1,0 +1,224 @@
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Inter-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Inter-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/Inter-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Inter-Bold.woff2') format('woff2');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 200 100% 40%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 200 100% 40%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.8rem;
+  }
+  .dark {
+    --background: 224 71% 4%; /* A very dark blue, like Telegram's main background */
+    --foreground: 0 0% 98%;
+    --card: 225 60% 9%; /* Slightly lighter blue-gray for cards */
+    --card-foreground: 0 0% 98%;
+    --popover: 225 60% 9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 210 100% 56%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 220 50% 15%; /* A darker blue-gray for secondary elements */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 220 50% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 220 50% 15%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 40% 12%; /* Subtle border color */
+    --input: 220 40% 12%;
+    --ring: 210 100% 56%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .bg-cover {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  .rtl-text {
+    direction: rtl;
+    text-align: right;
+  }
+
+  .desktop-container {
+    @media (min-width: 640px) {
+        max-width: 420px;
+        margin: 0 auto;
+        border-left: 1px solid hsl(var(--border));
+        border-right: 1px solid hsl(var(--border));
+        min-height: 100vh;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        position: relative;
+        overflow-x: hidden;
+    }
+  }
+}
+
+@layer components {
+    .card {
+        @apply shadow-none border;
+    }
+    .btn-brand {
+        @apply bg-green-500 text-white hover:bg-green-600;
+    }
+}
+
+.header-tabs-trigger {
+  @apply relative px-3 py-2 text-sm font-semibold text-blue-200 transition-colors;
+  @apply dark:text-muted-foreground;
+}
+
+.header-tabs-trigger[data-state="active"] {
+  background-color: transparent !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+
+.dark .header-tabs-trigger[data-state="active"] {
+    color: hsl(var(--primary)) !important;
+}
+
+
+.header-tabs-trigger[data-state="active"]::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0.75rem; /* px-3 */
+    right: 0.75rem; /* px-3 */
+    height: 2px;
+    background-color: white;
+}
+
+.dark .header-tabs-trigger[data-state="active"]::after {
+    background-color: hsl(var(--primary));
+}
+
+.channel-detail-tabs-trigger {
+  @apply relative px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors;
+}
+
+.channel-detail-tabs-trigger[data-state="active"] {
+  background-color: transparent !important;
+  color: hsl(var(--primary)) !important;
+  box-shadow: none !important;
+}
+
+.channel-detail-tabs-trigger[data-state="active"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 2px;
+  background-color: hsl(var(--primary));
+}
+
+.category-detail-tabs-trigger {
+  @apply relative px-3 py-2 text-sm font-semibold text-gray-500 transition-colors;
+}
+
+.category-detail-tabs-trigger[data-state="active"] {
+  background-color: transparent !important;
+  color: hsl(var(--primary)) !important;
+  box-shadow: none !important;
+}
+
+.category-detail-tabs-trigger[data-state="active"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 2px;
+  background-color: hsl(var(--primary));
+}

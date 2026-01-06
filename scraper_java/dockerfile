@@ -1,0 +1,29 @@
+# پایه n8n
+FROM n8nio/n8n:latest
+
+# دسترسی root برای نصب پکیج‌ها
+USER root
+
+# نصب Python و ابزارهای ساخت
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    python3-dev \
+    build-base
+
+# ساخت venv
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# نصب پکیج‌های مورد نیاز
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r /tmp/requirements.txt
+
+# ساخت دایرکتوری session و scripts
+RUN mkdir -p /home/node/sessions /scripts \
+    && chown -R node:node /home/node/sessions /scripts
+
+# سوئیچ به کاربر node
+USER node
+WORKDIR /scripts

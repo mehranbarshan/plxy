@@ -1,0 +1,153 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "User Profile",
+      "description": "Represents a user's public and private profile information.",
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "The user's display name."
+        },
+        "avatarUrl": {
+          "type": "string",
+          "description": "URL of the user's profile picture."
+        },
+        "memberSince": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date the user created their account."
+        },
+        "trophies": {
+          "type": "number",
+          "description": "The user's total trophy count."
+        },
+        "clubId": {
+          "type": "string",
+          "description": "The ID of the club the user belongs to, if any."
+        }
+      },
+      "required": ["username", "trophies"]
+    },
+    "signal": {
+      "title": "Trading Signal",
+      "description": "Represents a single trading signal, active or closed.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who created the signal."
+        },
+        "ticker": {
+          "type": "string",
+          "description": "The trading pair symbol, e.g., BTCUSDT."
+        },
+        "tradeType": {
+          "type": "string",
+          "enum": ["Long", "Short"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "pending", "closed"]
+        },
+        "entryPrice": {
+          "type": "number"
+        },
+        "closePrice": {
+          "type": "number"
+        },
+        "pnl": {
+          "type": "number",
+          "description": "Profit and Loss in USDT."
+        },
+        "leverage": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "closedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "ticker", "tradeType", "status", "entryPrice"]
+    },
+    "club": {
+      "title": "Trading Club",
+      "description": "Represents a trading club.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "badgeUrl": {
+          "type": "string"
+        },
+        "requiredTrophies": {
+          "type": "number"
+        }
+      },
+      "required": ["name", "requiredTrophies"]
+    },
+    "clubMember": {
+      "title": "Club Member",
+      "description": "Represents a member within a club.",
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["owner", "admin", "member"]
+        }
+      },
+      "required": ["role"]
+    },
+    "chatMessage": {
+      "title": "Chat Message",
+      "description": "A single message in a user's conversation with the AI.",
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["user", "assistant"]
+        },
+        "content": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "number"
+        }
+      },
+      "required": ["role", "content", "timestamp"]
+    }
+  },
+  "auth": {
+    "providers": ["anonymous"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/userProfile" },
+      "description": "Stores individual user profiles."
+    },
+    "/signals/{signalId}": {
+      "schema": { "$ref": "#/entities/signal" },
+      "description": "Stores all trading signals from all users."
+    },
+    "/clubs/{clubId}": {
+      "schema": { "$ref": "#/entities/club" },
+      "description": "Stores information about trading clubs."
+    },
+    "/clubs/{clubId}/members/{userId}": {
+      "schema": { "$ref": "#/entities/clubMember" },
+      "description": "Stores the members of each club and their roles."
+    },
+    "/users/{userId}/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/chatMessage" },
+      "description": "Stores the conversation history for a user's chat with the AI."
+    }
+  }
+}

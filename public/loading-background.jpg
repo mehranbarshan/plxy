@@ -1,0 +1,633 @@
+"use client"
+
+import { useState, useEffect, useMemo } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import BottomNav from '@/components/tradeview/bottom-nav';
+import AppHeader from '@/components/tradeview/app-header';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Users, Plus, Trophy, Search, Shield, ChevronLeft, ChevronRight, MapPin, Info, ArrowUp, ArrowDown, Medal, Gem, X, Lock } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import Image from 'next/image';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { countries } from '@/lib/capitals';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import Link from 'next/link';
+import BadgePreview from '@/components/tradeview/club/badge-preview';
+import JoinClubForm from '@/components/tradeview/club/join-club-form';
+import { clubs as staticClubs, type Club } from '@/lib/club-data';
+import { members as initialMembersData, type Member } from '@/lib/member-data';
+import MyClubView from '@/components/tradeview/club/my-club-view';
+import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+
+const USERNAME_KEY = 'tradeview_username';
+const MEMBERS_KEY = 'tradeview_members';
+const CLUBS_KEY = 'tradeview_clubs';
+
+
+const OptionSelector = ({ label, options, selected, onSelect, icon }: { label: string, options: string[], selected: string, onSelect: (value: string) => void, icon?: ReactNode }) => {
+  const currentIndex = options.indexOf(selected);
+
+  const handlePrev = () => {
+    const newIndex = (currentIndex - 1 + options.length) % options.length;
+    onSelect(options[newIndex]);
+  };
+
+  const handleNext = () => {
+    const newIndex = (currentIndex + 1) % options.length;
+    onSelect(options[newIndex]);
+  };
+
+  return (
+    <div className="flex items-center gap-2 w-full">
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 rounded-full bg-blue-600 hover:bg-blue-700" onClick={handlePrev}>
+            <ChevronLeft className="w-5 h-5" />
+        </Button>
+        <div className="flex-grow h-8 flex items-center justify-center bg-background rounded-md text-sm font-bold gap-2">
+            {icon}
+            {selected}
+        </div>
+        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 rounded-full bg-blue-600 hover:bg-blue-700" onClick={handleNext}>
+            <ChevronRight className="w-5 h-5" />
+        </Button>
+    </div>
+  );
+}
+
+
+// --- Badge Selector Dialog ---
+const predefinedBadges = [
+    { id: 'btc-orange', icon: 'btc', iconContent: '₿', bgColor: '#f97316', borderColor: 'default' },
+    { id: 'eth-blue', icon: 'eth', iconContent: 'Ξ', bgColor: '#6366f1', borderColor: 'default' },
+    { id: 'sol-green', icon: 'sol', iconContent: 'S', bgColor: '#16a34a', borderColor: 'gold' },
+    { id: 'doge-yellow', icon: 'doge', iconContent: 'Ð', bgColor: '#facc15', borderColor: 'default' },
+    { id: 'dd-purple', icon: 'none', iconContent: 'DD', bgColor: '#9333ea', borderColor: 'silver' },
+    { id: 'hh-red', icon: 'none', iconContent: 'HH', bgColor: '#dc2626', borderColor: 'default' },
+    { id: 'aa-gray', icon: 'none', iconContent: 'AA', bgColor: '#6b7280', borderColor: 'bronze' },
+    { id: 'bc-blue', icon: 'none', iconContent: 'BC', bgColor: '#1d4ed8', borderColor: 'default' },
+];
+
+function BadgeSelectorDialog({ onBadgeChange, onSave }: { onBadgeChange: (badge: any) => void, onSave: () => void }) {
+    
+    const handleSelectBadge = (badge: typeof predefinedBadges[0]) => {
+        onBadgeChange(badge);
+        onSave(); // This will close the dialog
+    }
+
+    return (
+        <DialogContent className="max-w-xs">
+            <DialogHeader>
+                <DialogTitle>Select Badge</DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-4 gap-4 py-4">
+                {predefinedBadges.map((badge) => (
+                    <div
+                        key={badge.id}
+                        className="cursor-pointer aspect-square flex items-center justify-center rounded-lg hover:bg-secondary"
+                        onClick={() => handleSelectBadge(badge)}
+                    >
+                        <BadgePreview 
+                            icon={badge.icon} 
+                            iconContent={badge.iconContent} 
+                            bgColor={badge.bgColor} 
+                            borderColor={badge.borderColor} 
+                            size={50} 
+                        />
+                    </div>
+                ))}
+            </div>
+        </DialogContent>
+    )
+}
+// --- End Badge Selector Dialog ---
+
+
+
+function CreateClubForm({ onClubCreated }: { onClubCreated: () => void }) {
+  const { toast } = useToast();
+  const [clubName, setClubName] = useState('');
+  const [description, setDescription] = useState('');
+  const [clubType, setClubType] = useState<Club['type']>("open");
+  const [minTrophies, setMinTrophies] = useState("0");
+  const [location, setLocation] = useState<string | undefined>("International");
+  const [familyFriendly, setFamilyFriendly] = useState(false);
+  const [isBadgeDialogOpen, setIsBadgeDialogOpen] = useState(false);
+
+  const [badge, setBadge] = useState({
+    icon: 'btc',
+    iconContent: '₿',
+    bgColor: '#f97316',
+    borderColor: 'default'
+  });
+
+  const handleSaveBadge = () => {
+    localStorage.setItem('tradeview_badge_draft', JSON.stringify(badge));
+    setIsBadgeDialogOpen(false);
+  }
+  
+  const handleCreateClub = () => {
+      const username = localStorage.getItem(USERNAME_KEY);
+      if (!username) {
+        toast({ variant: 'destructive', title: "Not Logged In", description: "You must be logged in to create a club." });
+        return;
+      }
+      
+      if (!clubName.trim()) {
+          toast({
+              variant: 'destructive',
+              title: 'Club Name Required',
+              description: 'Please enter a name for your club.',
+          });
+          return;
+      }
+
+      const storedClubs = localStorage.getItem(CLUBS_KEY);
+      const currentClubs: Club[] = storedClubs ? JSON.parse(storedClubs) : staticClubs;
+
+      const newClub: Club = {
+          id: clubName.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now(),
+          name: clubName,
+          description: description,
+          type: clubType,
+          maxMembers: 50,
+          requiredTrophies: parseInt(minTrophies),
+          badge: badge,
+          chatMessages: [],
+          trophies: 0, // Will be updated by owner's trophies
+          members: 1,
+          location: location,
+      };
+
+      const storedMembers = localStorage.getItem(MEMBERS_KEY);
+      const currentMembers: Member[] = storedMembers ? JSON.parse(storedMembers) : initialMembersData;
+
+      const ownerMemberIndex = currentMembers.findIndex(m => m.name === username);
+
+      const ownerTrophies = ownerMemberIndex !== -1 ? currentMembers[ownerMemberIndex].trophies : 0;
+      
+      if (ownerMemberIndex !== -1) {
+          currentMembers[ownerMemberIndex].clubId = newClub.id;
+          currentMembers[ownerMemberIndex].role = 'Owner';
+          newClub.trophies = ownerTrophies; // Set initial club trophies to owner's
+      } else {
+          // This case should ideally not happen if user is "logged in"
+           const newOwner: Member = {
+              id: username.toLowerCase().replace(/\s+/g, '-'),
+              clubId: newClub.id,
+              name: username,
+              role: 'Owner',
+              trophies: 0,
+              avatar: localStorage.getItem('tradeview_avatar') || 'https://placehold.co/100x100.png'
+          };
+          currentMembers.push(newOwner);
+      }
+      
+      const updatedClubs = [...currentClubs, newClub];
+      localStorage.setItem(CLUBS_KEY, JSON.stringify(updatedClubs));
+      localStorage.setItem(MEMBERS_KEY, JSON.stringify(currentMembers));
+      localStorage.removeItem('tradeview_badge_draft');
+
+      toast({
+          title: `Club "${clubName}" Created!`,
+          description: "You are now the owner of this new club.",
+      });
+
+      onClubCreated();
+  };
+
+
+  return (
+    <Dialog open={isBadgeDialogOpen} onOpenChange={setIsBadgeDialogOpen}>
+        <div className="space-y-4 pt-2">
+          <div className="grid grid-cols-[auto,1fr] items-center gap-x-4 gap-y-4">
+            <Label htmlFor="clubName" className="text-sm font-semibold text-muted-foreground text-right">Club Name</Label>
+            <Input id="clubName" value={clubName} onChange={(e) => setClubName(e.target.value)} placeholder="Enter club name..." className="w-full bg-background border-2" />
+
+            <Label className="text-sm font-semibold text-muted-foreground text-right">Badge</Label>
+            <div className="flex items-center gap-2">
+                <div className="p-1 bg-secondary rounded-lg border-2 w-12 h-12 flex items-center justify-center">
+                    <BadgePreview icon={badge.icon} iconContent={badge.iconContent} bgColor={badge.bgColor} borderColor={badge.borderColor} size={40} />
+                </div>
+                <DialogTrigger asChild>
+                    <Button variant="ghost" size="sm" className="bg-blue-600 text-white hover:bg-blue-700">Browse</Button>
+                </DialogTrigger>
+            </div>
+
+            <Label htmlFor="description" className="text-sm font-semibold text-muted-foreground text-right self-start pt-2">Description</Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Describe your club..."
+              maxLength={150}
+              className="w-full bg-background border-2"
+            />
+
+            <Label className="text-sm font-semibold text-muted-foreground text-right">Type</Label>
+            <OptionSelector 
+              label="Type"
+              options={["open", "invite", "closed"]}
+              selected={clubType}
+              onSelect={(value) => setClubType(value as Club['type'])}
+            />
+            
+            <Label className="text-sm font-semibold text-muted-foreground text-right">Required Trophies</Label>
+            <OptionSelector 
+              label="Required Trophies"
+              options={["0", "1000", "2000", "3000", "4000", "5000"]}
+              selected={minTrophies}
+              onSelect={setMinTrophies}
+              icon={<Trophy className="w-4 h-4 text-yellow-500" />}
+            />
+            
+            <Label className="text-sm font-semibold text-muted-foreground text-right flex items-center justify-end gap-1">
+                Family Friendly
+                <Info className="w-4 h-4 text-muted-foreground cursor-pointer" />
+            </Label>
+            <div className="flex justify-start">
+                <Switch id="family-friendly" checked={familyFriendly} onCheckedChange={setFamilyFriendly} />
+            </div>
+
+            <Label htmlFor="location" className="text-sm font-semibold text-muted-foreground text-right">Club Location</Label>
+            <Select value={location} onValueChange={setLocation}>
+                <SelectTrigger id="location" className="w-full h-9">
+                    <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-muted-foreground" />
+                        <SelectValue placeholder="Browse" />
+                    </div>
+                </SelectTrigger>
+                <SelectContent>
+                    <ScrollArea className="h-72">
+                        {countries.map((country) => (
+                        <SelectItem key={country} value={country}>
+                            {country}
+                        </SelectItem>
+                    ))}
+                    </ScrollArea>
+                </SelectContent>
+            </Select>
+          </div>
+
+          <Button className="w-full h-12 text-lg font-bold bg-blue-600 hover:bg-blue-700" onClick={handleCreateClub} disabled={!clubName.trim()}>
+            <span className="flex items-center gap-2">
+                Create
+                <Gem className="w-4 h-4" />
+                1,000
+            </span>
+          </Button>
+        </div>
+        <BadgeSelectorDialog onBadgeChange={setBadge} onSave={handleSaveBadge} />
+    </Dialog>
+  )
+}
+
+const ClubRankIndicator = ({ rank, change }: { rank: number; change: 'up' | 'down' | 'same' }) => {
+    const rankColor = rank <= 3 ? 'text-yellow-500' : 'text-muted-foreground';
+    let ChangeIcon = null;
+    let changeColor = '';
+
+    switch(change) {
+        case 'up':
+            ChangeIcon = ArrowUp;
+            changeColor = 'text-green-500';
+            break;
+        case 'down':
+            ChangeIcon = ArrowDown;
+            changeColor = 'text-red-500';
+            break;
+        default:
+            break;
+    }
+
+    return (
+        <div className="flex flex-col items-center w-10">
+            <span className={cn("font-bold text-lg", rankColor)}>{rank}</span>
+            {ChangeIcon && <ChangeIcon className={cn("w-4 h-4", changeColor)} />}
+        </div>
+    )
+}
+
+const ClubListItem = ({ club, rank, change }: { club: Club, rank: number, change: 'up' | 'down' | 'same' }) => {
+    return (
+        <Link href={`/club/${club.id}`}>
+            <Card className="p-3 rounded-xl hover:bg-secondary/50 transition-colors cursor-pointer">
+                <div className="flex items-center gap-3">
+                    <ClubRankIndicator rank={rank} change={change} />
+                    <BadgePreview 
+                        icon={club.badge.icon}
+                        iconContent={club.badge.iconContent}
+                        bgColor={club.badge.bgColor}
+                        borderColor={club.badge.borderColor}
+                        size={48}
+                    />
+                    <div className="flex-grow">
+                        <h3 className="font-bold text-sm">{club.name}</h3>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <Users className="w-3.5 h-3.5" />
+                            <span>{club.members}/{club.maxMembers}</span>
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-end gap-2 text-sm bg-secondary px-3 py-1.5 rounded-lg">
+                        <span className="font-bold">{club.trophies.toLocaleString()}</span>
+                        <Trophy className="w-4 h-4 text-yellow-500" />
+                    </div>
+                </div>
+            </Card>
+        </Link>
+    );
+};
+
+const LeaderboardPrizeHeader = () => (
+    <Card className="bg-gradient-to-br from-yellow-400/20 to-orange-400/20 rounded-2xl p-4 mb-4 border-yellow-500/30">
+        <div className="flex justify-between items-center">
+             <Trophy className="w-16 h-16 text-yellow-500 opacity-30" />
+            <div className="text-right">
+                <h3 className="text-base font-bold">Weekly Leaderboard</h3>
+                <div className="space-y-1 mt-2 text-xs">
+                    <div className="flex items-center gap-2 justify-end">
+                        <span>1st Place: <strong>$100,000</strong></span>
+                        <Medal className="w-4 h-4 text-yellow-500"/>
+                    </div>
+                     <div className="flex items-center gap-2 justify-end">
+                        <span>2nd Place: <strong>$50,000</strong></span>
+                        <Medal className="w-4 h-4 text-gray-400"/>
+                    </div>
+                     <div className="flex items-center gap-2 justify-end">
+                         <span>3rd Place: <strong>$25,000</strong></span>
+                        <Medal className="w-4 h-4 text-orange-400"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Card>
+)
+
+
+function LeaderboardTabContent({ clubs }: { clubs: Club[] }) {
+  const sortedClubs = useMemo(() => {
+      return [...clubs].sort((a,b) => b.trophies - a.trophies);
+  }, [clubs]);
+
+  const rankChanges: ('up' | 'down' | 'same')[] = ['same', 'down', 'up', 'same', 'down', 'up', 'up', 'down'];
+
+  return (
+      <>
+        <LeaderboardPrizeHeader />
+        <div className="space-y-3">
+            {sortedClubs.map((club, index) => (
+                <ClubListItem key={club.id} club={club} rank={index + 1} change={rankChanges[index] || 'same'} />
+            ))}
+        </div>
+      </>
+  );
+}
+
+function SocialTabContent() {
+  return (
+      <>
+        <Tabs defaultValue="friends" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 bg-secondary/50">
+                <TabsTrigger value="friends" className="text-xs gap-1"><Users className="w-4 h-4" /> Friends</TabsTrigger>
+                <TabsTrigger value="requests" className="text-xs gap-1"><Plus className="w-4 h-4" /> Requests</TabsTrigger>
+                <TabsTrigger value="search" className="text-xs gap-1"><Search className="w-4 h-4" /> Search</TabsTrigger>
+            </TabsList>
+            <TabsContent value="friends" className="mt-4">
+                <Card className="p-6 text-center text-muted-foreground">
+                    Friends list will be displayed here.
+                </Card>
+            </TabsContent>
+            <TabsContent value="requests" className="mt-4">
+                <Card className="p-6 text-center text-muted-foreground">
+                    Friend requests will be displayed here.
+                </Card>
+            </TabsContent>
+            <TabsContent value="search" className="mt-4">
+                <Card className="p-6 text-center text-muted-foreground">
+                   User search functionality will be here.
+                </Card>
+            </TabsContent>
+        </Tabs>
+      </>
+  );
+}
+
+
+export default function ClubPage() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState("leaderboard");
+  const [userClub, setUserClub] = useState<Club | null>(null);
+  const [leaderboardClubs, setLeaderboardClubs] = useState<Club[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isCreateClubOpen, setIsCreateClubOpen] = useState(false);
+
+  const updateClubData = () => {
+      const username = localStorage.getItem(USERNAME_KEY);
+      const storedMembers = localStorage.getItem(MEMBERS_KEY);
+      const currentMembers: Member[] = storedMembers ? JSON.parse(storedMembers) : initialMembersData;
+      
+      const storedClubs = localStorage.getItem(CLUBS_KEY);
+      const allClubs: Club[] = storedClubs ? JSON.parse(storedClubs) : staticClubs;
+
+      const dynamicClubs: Club[] = allClubs.map(club => {
+          const clubMembers = currentMembers.filter((member: Member) => member.clubId === club.id);
+          const totalTrophies = clubMembers.reduce((sum: number, member: Member) => sum + member.trophies, 0);
+          return {
+              ...club,
+              trophies: totalTrophies,
+              members: clubMembers.length,
+          };
+      });
+
+      setLeaderboardClubs(dynamicClubs);
+
+      if (!username) {
+          setUserClub(null);
+          return;
+      };
+      
+      const memberRecord = currentMembers.find((m: Member) => m.name === username);
+      if (memberRecord && memberRecord.clubId) {
+          const club = dynamicClubs.find(c => c.id === memberRecord.clubId);
+          if (club) {
+              setUserClub(club);
+              if (pathname === '/club' && activeTab !== 'my-club') {
+                  setActiveTab('my-club');
+              }
+          } else {
+              setUserClub(null);
+          }
+      } else {
+          setUserClub(null);
+      }
+  };
+
+  useEffect(() => {
+    updateClubData();
+    
+    const handleStorageChange = () => updateClubData();
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [pathname]);
+
+  const handleLeave = () => {
+      const username = localStorage.getItem(USERNAME_KEY);
+      if (!username || !userClub) return;
+
+      const storedMembers = localStorage.getItem(MEMBERS_KEY);
+      const currentMembers: Member[] = storedMembers ? JSON.parse(storedMembers) : initialMembersData;
+      const clubMembers = currentMembers.filter(m => m.clubId === userClub.id);
+      const currentUserInClub = clubMembers.find(m => m.name === username);
+
+      let wasOwnerAndLastMember = false;
+      if (currentUserInClub && currentUserInClub.role === 'Owner' && clubMembers.length === 1) {
+          wasOwnerAndLastMember = true;
+          // Delete the club
+          const storedClubs = localStorage.getItem(CLUBS_KEY);
+          const currentClubs: Club[] = storedClubs ? JSON.parse(storedClubs) : staticClubs;
+          const updatedClubs = currentClubs.filter(c => c.id !== userClub.id);
+          localStorage.setItem(CLUBS_KEY, JSON.stringify(updatedClubs));
+      }
+
+      // Update member's club status
+      const updatedMembers = currentMembers.map(m => {
+          if (m.name === username && m.clubId === userClub.id) {
+              return { ...m, clubId: '', role: 'Member' };
+          }
+          return m;
+      });
+      localStorage.setItem(MEMBERS_KEY, JSON.stringify(updatedMembers));
+
+      toast({
+          variant: "destructive",
+          title: wasOwnerAndLastMember ? `${userClub.name} has been disbanded.` : `You have left ${userClub.name}`,
+      });
+      
+      updateClubData();
+      setActiveTab("leaderboard");
+  };
+
+  const onClubCreated = () => {
+    updateClubData();
+    setIsCreateClubOpen(false);
+  }
+
+
+  return (
+    <Dialog open={isCreateClubOpen} onOpenChange={setIsCreateClubOpen}>
+      <div className="flex flex-col min-h-screen bg-background font-body">
+          <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm">
+              <AppHeader />
+              <div className="container mx-auto max-w-2xl px-4">
+                   <Tabs value={activeTab} onValueChange={setActiveTab}>
+                    <TabsList className="flex flex-wrap items-center justify-center bg-secondary rounded-xl p-1 h-auto shrink-0">
+                       <TabsTrigger value="leaderboard" className="justify-center data-[state=active]:shadow-sm rounded-lg px-3 py-1.5 text-xs gap-1 flex-shrink-0">
+                          <Trophy className="w-4 h-4" />
+                          <span>Leaderboard</span>
+                       </TabsTrigger>
+                      {userClub ? (
+                           <TabsTrigger value="my-club" className="justify-center data-[state=active]:shadow-sm rounded-lg px-3 py-1.5 text-xs gap-1 flex-shrink-0">
+                              <Shield className="w-4 h-4" />
+                              <span>My Club</span>
+                           </TabsTrigger>
+                       ) : null}
+                      <TabsTrigger value="club" className="justify-center data-[state=active]:shadow-sm rounded-lg px-3 py-1.5 text-xs gap-1 flex-shrink-0">
+                          <Shield className="w-4 h-4" />
+                          <span>Club</span>
+                      </TabsTrigger>
+                      <TabsTrigger value="social" className="justify-center data-[state=active]:shadow-sm rounded-lg px-3 py-1.5 text-xs gap-1 flex-shrink-0">
+                          <Users className="w-4 h-4" />
+                          <span>Social</span>
+                      </TabsTrigger>
+                    </TabsList>
+                   </Tabs>
+                   {activeTab === 'club' && (
+                      <div className="my-4 space-y-2">
+                          <div className="relative">
+                              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                              <Input 
+                                  placeholder="Search for a club..."
+                                  value={searchQuery}
+                                  onChange={(e) => setSearchQuery(e.target.value)}
+                                  className="pl-10 bg-secondary"
+                              />
+                          </div>
+                          <div className="flex items-center justify-between px-2">
+                              <Label htmlFor="advanced-search" className="text-xs text-muted-foreground">Advanced search</Label>
+                              <Button variant="link" size="sm" className="text-xs h-auto py-0">Show</Button>
+                          </div>
+                      </div>
+                  )}
+              </div>
+          </header>
+        <main className="flex-grow container mx-auto max-w-2xl px-4 flex flex-col pb-28">
+          <Tabs value={activeTab} className="flex flex-col flex-grow">
+            <div className="pt-4 flex-grow min-h-0">
+               <TabsContent value="leaderboard" className="h-full m-0">
+                  <ScrollArea className="h-full">
+                    <LeaderboardTabContent clubs={leaderboardClubs} />
+                  </ScrollArea>
+               </TabsContent>
+               <TabsContent value="club" className="h-full m-0">
+                  <JoinClubForm userHasClub={!!userClub} searchQuery={searchQuery} />
+               </TabsContent>
+               {userClub && (
+                  <TabsContent value="my-club" className="h-full m-0">
+                      <ScrollArea className="h-full">
+                          <MyClubView club={userClub} onLeave={handleLeave} />
+                      </ScrollArea>
+                  </TabsContent>
+               )}
+               <TabsContent value="social" className="h-full m-0">
+                   <ScrollArea className="h-full">
+                      <SocialTabContent />
+                   </ScrollArea>
+               </TabsContent>
+            </div>
+          </Tabs>
+        </main>
+        {!userClub && !['leaderboard', 'social'].includes(activeTab) && (
+          <div className="sticky bottom-[66px] z-10 p-4 bg-background/80 backdrop-blur-sm border-t">
+              <div className="container mx-auto max-w-2xl px-0">
+                <DialogTrigger asChild>
+                    <Button className="w-full h-12">
+                        <Plus className="w-5 h-5 mr-2" />
+                        Create a Club
+                    </Button>
+                </DialogTrigger>
+              </div>
+          </div>
+        )}
+        <div className="sticky bottom-0 z-20">
+          <BottomNav />
+        </div>
+      </div>
+      <DialogContent className="sm:max-w-md bg-secondary border-4 border-blue-900/50 rounded-2xl">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="bg-blue-900/80 border-4 border-blue-900/50 p-2 rounded-xl">
+                 <Shield className="w-10 h-10 text-yellow-400" />
+            </div>
+          </div>
+           <DialogClose className="absolute top-2 right-2 p-1 bg-red-600 rounded-md text-white border-2 border-red-800">
+                <X className="w-4 h-4"/>
+            </DialogClose>
+          <DialogHeader className="text-center pt-8">
+            <DialogTitle className="text-xl font-bold uppercase tracking-wider font-display">Create your own Club</DialogTitle>
+            <DialogDescription className="font-semibold text-blue-400">
+              LEAD YOUR members to profit!
+            </DialogDescription>
+          </DialogHeader>
+          <CreateClubForm onClubCreated={onClubCreated} />
+      </DialogContent>
+    </Dialog>
+  );
+}

@@ -1,0 +1,68 @@
+export interface Member {
+    id: string;
+    clubId: string;
+    name: string;
+    role: 'Owner' | 'Admin' | 'Member';
+    trophies: number;
+    avatar: string;
+}
+
+// Function to get the initial avatar from localStorage or a default
+const getInitialUserAvatar = (): string => {
+    if (typeof window !== 'undefined') {
+        const savedAvatar = localStorage.getItem('tradeview_avatar');
+        if (savedAvatar) {
+            return savedAvatar;
+        }
+    }
+    return 'https://asset.gaminvest.org/asset/social-trading/profile.png';
+}
+
+const getInitialUsername = (): string => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('tradeview_username') || 'User';
+    }
+    return 'User';
+}
+
+
+export const members: Member[] = [
+    // Crypto Pioneers
+    { id: 'm1', clubId: 'crypto-pioneers', name: 'Satoshi', role: 'Owner', trophies: 3200, avatar: 'https://picsum.photos/seed/2/100/100' },
+    { id: 'm2', clubId: 'crypto-pioneers', name: 'Vitalik', role: 'Admin', trophies: 2800, avatar: 'https://picsum.photos/seed/3/100/100' },
+    { id: 'm3', clubId: 'crypto-pioneers', name: 'Charlie', role: 'Member', trophies: 2500, avatar: 'https://picsum.photos/seed/4/100/100' },
+    { id: 'm4', clubId: 'crypto-pioneers', name: 'Gavin', role: 'Member', trophies: 2200, avatar: 'https://picsum.photos/seed/5/100/100' },
+    { id: 'm15', clubId: 'crypto-pioneers', name: 'Member 1', role: 'Member', trophies: 1000, avatar: 'https://picsum.photos/seed/6/100/100' },
+    { id: 'm16', clubId: 'crypto-pioneers', name: 'Member 2', role: 'Member', trophies: 1050, avatar: 'https://picsum.photos/seed/7/100/100' },
+
+
+    // Whale Watchers
+    { id: 'm5', clubId: 'whale-watchers', name: 'Moby Dick', role: 'Owner', trophies: 4500, avatar: 'https://picsum.photos/seed/8/100/100' },
+    { id: 'm6', clubId: 'whale-watchers', name: 'Captain Ahab', role: 'Admin', trophies: 4100, avatar: 'https://picsum.photos/seed/9/100/100' },
+
+    // Diamond Hands
+    { id: 'm7', clubId: 'diamond-hands', name: 'Diamond Dave', role: 'Owner', trophies: 5500, avatar: 'https://picsum.photos/seed/10/100/100' },
+    { id: 'm8', clubId: 'diamond-hands', name: 'Ruby Rachael', role: 'Admin', trophies: 5100, avatar: 'https://picsum.photos/seed/11/100/100' },
+
+    // Rocket Riders
+    { id: 'm9', clubId: 'rocket-riders', name: 'Elon', role: 'Owner', trophies: 4800, avatar: 'https://picsum.photos/seed/12/100/100' },
+
+    // DeFi Degenerates
+    { id: 'm10', clubId: 'defi-degenerates', name: 'Degen Don', role: 'Owner', trophies: 4200, avatar: 'https://picsum.photos/seed/13/100/100' },
+    { id: 'm11', clubId: 'defi-degenerates', name: 'Yield Yoda', role: 'Admin', trophies: 3900, avatar: 'https://picsum.photos/seed/14/100/100' },
+
+    // HODL Heroes
+    { id: 'm12', clubId: 'hodl-heroes', name: 'Captain HODL', role: 'Owner', trophies: 3500, avatar: 'https://picsum.photos/seed/15/100/100' },
+
+    // Altcoin Avengers
+    { id: 'm13', clubId: 'altcoin-avengers', name: 'Professor Alt', role: 'Owner', trophies: 4000, avatar: 'https://picsum.photos/seed/16/100/100' },
+
+    // The Block Chain
+    { id: 'm14', clubId: 'the-block-chain', name: 'ChainLink Chad', role: 'Owner', trophies: 4300, avatar: 'https://picsum.photos/seed/17/100/100' },
+];
+
+export const getMembersByClubId = (clubId: string): Member[] => {
+    const storedMembersRaw = typeof window !== 'undefined' ? localStorage.getItem('MEMBERS_KEY') : null;
+    const currentMembers: Member[] = storedMembersRaw ? JSON.parse(storedMembersRaw) : members;
+    return currentMembers.filter(member => member.clubId === clubId).sort((a, b) => b.trophies - a.trophies);
+}

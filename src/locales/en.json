@@ -1,0 +1,252 @@
+
+{
+  "settings": {
+    "community": "PLXY community",
+    "notifications": "Notifications",
+    "faq": "PLXY FAQ",
+    "language": "Language",
+    "invite": "Invite friend",
+    "share": "Share",
+    "get_premium": "Get Premium",
+    "about": "About app",
+    "dashboard": "Dashboard",
+    "collections": "Collections",
+    "folders": "Folders",
+    "categories": "Categories",
+    "settings_item": "Settings",
+    "ask_question": "Ask a Question",
+    "privacy_policy": "Privacy Policy",
+    "my_signals": "Signals"
+  },
+  "bottom_nav": {
+    "home": "Home",
+    "channels": "Channels",
+    "trade": "Demo Trade",
+    "tournament": "Tournament",
+    "profile": "Profile"
+  },
+  "app_header": {
+    "connecting": "Connecting..."
+  },
+  "telegram_channels": {
+    "search_placeholder": "Search Telegram crypto channels",
+    "filters": "Filters",
+    "accuracy": "Accuracy",
+    "risk_level": "Risk Level",
+    "type": "Type",
+    "apply_filters": "Apply Filters",
+    "clear": "Clear",
+    "add_channel_title": "Add a new Telegram Channel",
+    "add_channel_desc": "Enter the channel link below. We'll fetch its info automatically.",
+    "add_channel_button": "Add Channel",
+    "cancel": "Cancel",
+    "tab_all": "All",
+    "tab_signals": "Trading Signals",
+    "tab_crypto_news": "Crypto News",
+    "tab_airdrop": "Airdrop",
+    "tab_insight": "Market Insight",
+    "airdrop_empty_state": "No airdrop channels found. Check back later for updates on new airdrop opportunities and channels!"
+  },
+  "search_page": {
+    "placeholder": "Search Telegram crypto channels",
+    "filters_title": "Filters",
+    "accuracy": "Accuracy",
+    "risk_level": "Risk Level",
+    "type": "Type",
+    "apply_button": "Apply Filters",
+    "clear_button": "Clear",
+    "no_results_initial": "No results",
+    "no_results_filtered": "No channels found. Try adjusting your search or filters.",
+    "view_button": "View",
+    "join_button": "Join",
+    "unknown_subscribers": "Unknown subscriber count"
+  },
+  "about_page": {
+    "title": "About App",
+    "app_title": "PLXY App",
+    "version": "Application version",
+    "subtitle": "Your ultimate social trading companion."
+  },
+  "ai_page": {
+    "title": "AI Assistant"
+  },
+  "loading": "Loading...",
+  "avatars_page": {
+    "title": "Avatars",
+    "shop": "Shop",
+    "purchased": "Purchased"
+  },
+  "category_detail_page": {
+    "all": "All",
+    "channels": "Channels",
+    "groups": "Groups",
+    "bots": "Bots",
+    "content_placeholder": "Content for {{title}} ({{tab}}) will be displayed here."
+  },
+  "categories_page": {
+    "title": "Categories"
+  },
+  "categories": {
+    "news_media": "News & Media",
+    "entertainment": "Entertainment",
+    "educational": "Educational",
+    "business_shopping": "Business & Shopping",
+    "finance_investment": "Finance & Investment",
+    "science_technology": "Science & Technology",
+    "sports": "Sports",
+    "lifestyle_personal": "Lifestyle & Personal",
+    "music_art": "Music & Art",
+    "tools_services": "Tools & Services",
+    "community_groups": "Community & Groups",
+    "movies": "Movies",
+    "anime": "Anime",
+    "proxy_vpn": "Proxy and VPN",
+    "other": "Other"
+  },
+  "profile_page": {
+    "edit_info": "Edit Info",
+    "set_profile_picture": "Set Profile Picture",
+    "log_out": "Log Out",
+    "online_status": "online",
+    "account_title": "Account",
+    "email_label": "Email Address",
+    "username_label": "Username",
+    "bio_label": "Bio",
+    "settings_title": "Settings",
+    "notifications": "Notifications and Sounds",
+    "privacy_security": "Privacy and Security",
+    "language": "Language",
+    "help_title": "Help",
+    "ask_question": "Ask a Question",
+    "faq": "PLXY FAQ",
+    "privacy_policy": "Privacy Policy",
+    "english": "English",
+    "persian": "Persian",
+    "delete_account": "Delete Account",
+    "current_plan": "Current Plan",
+    "free_plan": "Free Plan",
+    "collections": "Collections",
+    "folders": "Folders"
+  },
+  "channel_detail": {
+    "pnl": "PNL",
+    "active": "Active",
+    "entry": "Entry",
+    "tp": "TP",
+    "sl": "SL",
+    "copy_signal": "Copy Signal",
+    "subscriber_count": "{{count}} subscribers",
+    "subscribers": "subscribers",
+    "accuracy": "Accuracy",
+    "reviews": "{{count}} Reviews",
+    "reviews_k": "{{count}}K Reviews",
+    "risk": "Risk",
+    "analyze": "Analyze",
+    "tabs": {
+      "signals": "Signals",
+      "about": "About",
+      "reviews": "Reviews"
+    },
+    "join": "Join",
+    "unsubscribe": "Unfollow",
+    "subscribe": "Follow",
+    "share": "Share",
+    "mute": "Mute",
+    "analysis_required": {
+      "title": "Analysis Required",
+      "credits_left": "You have {{credits}} free analysis credits left this month.",
+      "analyze_button": "Analyze to see the Results"
+    },
+    "risk_tooltip": {
+      "low": "Low Risk (1–10x)",
+      "medium": "Medium Risk (10–25x)",
+      "high": "High Risk (25–100x)"
+    },
+    "no_signals": "No signals found for this channel.",
+    "no_reviews": "Reviews are not available yet.",
+    "toast": {
+      "joining_demo_title": "Joining Channel (Demo)",
+      "joining_demo_desc": "You have requested to join {{channelName}}.",
+      "unsubscribed": "Unfollowed {{channelName}}",
+      "subscribed": "Followed {{channelName}}",
+      "no_credits_title": "No Credits Left",
+      "no_credits_desc": "You have used all your free analyses for this month. Upgrade for more.",
+      "analysis_success_title": "Analysis Successful!",
+      "analysis_success_desc": "You can now view the channel details. You have {{newCredits}} credits left."
+    },
+    "analyze_dialog": {
+      "title": "Analyze Channel",
+      "description": "Are you sure you want to use one of your credits to analyze this channel?",
+      "cancel": "Cancel",
+      "confirm": "Yes, Analyze"
+    },
+    "unsubscribe_dialog": {
+      "title": "Unfollow",
+      "description": "Are you sure you want to unfollow {{channelName}}?",
+      "cancel": "Cancel",
+      "confirm": "Unfollow"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {{username}}!",
+    "welcome_prefix": "Welcome back, ",
+    "summary_subtitle": "Here's your trading summary.",
+    "free_plan": "Free Plan",
+    "upgrade": "Upgrade",
+    "free_plan_desc": "You are on the Free Plan. Upgrade for more features.",
+    "analysis_stats": "Analysis Stats",
+    "analyzed_channels": "Analyzed Channels",
+    "remaining_credits": "Remaining Credits",
+    "view_reports": "View Reports",
+    "subscribed_channels": "Followed Channels",
+    "view": "View",
+    "subscribed_signals": "Followed Signals",
+    "no_active_signals": "No active signals from your followed channels.",
+    "browse_channels": "Browse Channels",
+    "coming_soon_title": "Coming Soon",
+    "coming_soon_desc": "The analysis reports feature is under development."
+  },
+  "your_channels": {
+    "title": "Collections",
+    "search_placeholder": "Search channels...",
+    "your_lists": "Your Lists",
+    "recently_added": "Recently Added",
+    "create_list_title": "Create New Folder",
+    "create_list_desc": "Enter a name for your new list to organize your watchlist.",
+    "list_name_label": "Name",
+    "list_name_placeholder": "e.g., DeFi Gems",
+    "create_button": "Create List",
+    "empty_state_title": "Your Watchlist is Empty",
+    "empty_state_desc": "Add channels to your watchlist to track them here.",
+    "browse_channels_button": "Browse Channels",
+    "rename_list_title": "Rename List",
+    "rename_list_desc": "Enter a new name for the list \"{{folderName}}\".",
+    "save_button": "Save",
+    "delete_list_title": "Are you sure?",
+    "delete_list_desc": "This will permanently delete the \"{{folderName}}\" list. This action cannot be undone.",
+    "delete_button": "Delete",
+    "cancel_button": "Cancel",
+    "toast_channel_removed": "Channel Removed",
+    "toast_channel_removed_desc": "The channel has been removed from your watchlist.",
+    "toast_list_created": "Folder Created",
+    "toast_list_created_desc": "Folder \"{{folderName}}\" has been created.",
+    "toast_invalid_name": "Folder name cannot be empty.",
+    "toast_list_renamed": "List Renamed",
+    "toast_list_deleted": "List Deleted",
+    "loading": "Loading watchlist...",
+    "add_channels_title": "Add Channels"
+  },
+  "folders_page": {
+    "title": "Folders",
+    "description": "Create folders for different groups of chats and quickly switch between them.",
+    "save_order": "Order Saved",
+    "save_order_desc": "Your new folder order has been saved.",
+    "list_title": "Folders",
+    "create_folder": "Create New Folder",
+    "rename": "Rename",
+    "delete": "Delete"
+  }
+}
+
+    

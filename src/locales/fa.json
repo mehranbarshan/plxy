@@ -1,0 +1,252 @@
+
+{
+  "settings": {
+    "community": "انجمن پلکسی",
+    "notifications": "اعلانات",
+    "faq": "پرسش‌های متداول پلکسی",
+    "language": "زبان",
+    "invite": "دعوت از دوستان",
+    "share": "اشتراک‌گذاری",
+    "get_premium": "دریافت اشتراک ویژه",
+    "about": "درباره برنامه",
+    "dashboard": "داشبورد",
+    "collections": "کالکشن‌ها",
+    "folders": "پوشه‌ها",
+    "categories": "دسته‌بندی‌ها",
+    "settings_item": "تنظیمات",
+    "ask_question": "پرسیدن سوال",
+    "privacy_policy": "سیاست حریم خصوصی",
+    "my_signals": "سیگنال‌ها"
+  },
+  "bottom_nav": {
+    "home": "خانه",
+    "channels": "کانال‌ها",
+    "trade": "ترید دمو",
+    "tournament": "مسابقات",
+    "profile": "پروفایل"
+  },
+  "app_header": {
+    "connecting": "در حال اتصال..."
+  },
+  "telegram_channels": {
+    "search_placeholder": "جستجوی کانال‌های کریپتو تلگرام",
+    "filters": "فیلترها",
+    "accuracy": "نرخ موفقیت",
+    "risk_level": "سطح ریسک",
+    "type": "نوع",
+    "apply_filters": "اعمال فیلترها",
+    "clear": "پاک کردن",
+    "add_channel_title": "افزودن کانال تلگرام جدید",
+    "add_channel_desc": "لینک کانال را وارد کنید تا اطلاعات آن به صورت خودکار دریافت شود.",
+    "add_channel_button": "افزودن کانال",
+    "cancel": "لغو",
+    "tab_all": "همه",
+    "tab_signals": "سیگنال‌های ترید",
+    "tab_crypto_news": "اخبار کریپتو",
+    "tab_airdrop": "ایردراپ",
+    "tab_insight": "تحلیل بازار",
+    "airdrop_empty_state": "کانال ایردراپی یافت نشد. برای اطلاع از فرصت‌ها و کانال‌های جدید ایردراپ، بعداً دوباره سر بزنید!"
+  },
+  "search_page": {
+    "placeholder": "جستجوی کانال‌های کریپتو تلگرام",
+    "filters_title": "فیلترها",
+    "accuracy": "دقت",
+    "risk_level": "سطح ریسک",
+    "type": "نوع",
+    "apply_button": "اعمال فیلتر",
+    "clear_button": "پاک کردن",
+    "no_results_initial": "نتیجه‌ای یافت نشد.",
+    "no_results_filtered": "کانالی یافت نشد. جستجو یا فیلترهای خود را تغییر دهید.",
+    "view_button": "مشاهده",
+    "join_button": "پیوستن",
+    "unknown_subscribers": "تعداد مشترک نامشخص"
+  },
+  "about_page": {
+    "title": "درباره برنامه",
+    "app_title": "اپلیکیشن پلکسی",
+    "version": "نسخه اپلیکیشن",
+    "subtitle": "همراه نهایی شما در معاملات اجتماعی."
+  },
+  "ai_page": {
+    "title": "دستیار هوش مصنوعی"
+  },
+  "loading": "در حال بارگذاری...",
+  "avatars_page": {
+    "title": "آواتارها",
+    "shop": "فروشگاه",
+    "purchased": "خریداری شده"
+  },
+  "category_detail_page": {
+    "all": "همه",
+    "channels": "کانال‌ها",
+    "groups": "گروه‌ها",
+    "bots": "بات‌ها",
+    "content_placeholder": "محتوای {{title}} ({{tab}}) اینجا نمایش داده خواهد شد."
+  },
+  "categories_page": {
+    "title": "دسته‌بندی‌ها"
+  },
+  "categories": {
+    "news_media": "اخبار و رسانه",
+    "entertainment": "سرگرمی",
+    "educational": "آموزشی",
+    "business_shopping": "کسب و کار و خرید",
+    "finance_investment": "مالی و سرمایه‌گذاری",
+    "science_technology": "علم و فناوری",
+    "sports": "ورزشی",
+    "lifestyle_personal": "سبک زندگی و شخصی",
+    "music_art": "موسیقی و هنر",
+    "tools_services": "ابزارها و خدمات",
+    "community_groups": "انجمن‌ها و گروه‌ها",
+    "movies": "فیلم‌ها",
+    "anime": "انیمه",
+    "proxy_vpn": "و پروکسی VPN",
+    "other": "سایر"
+  },
+  "profile_page": {
+    "edit_info": "ویرایش اطلاعات",
+    "set_profile_picture": "تنظیم عکس پروفایل",
+    "log_out": "خروج از حساب",
+    "online_status": "آنلاین",
+    "account_title": "حساب کاربری",
+    "email_label": "آدرس ایمیل",
+    "username_label": "نام کاربری",
+    "bio_label": "بیوگرافی",
+    "settings_title": "تنظیمات",
+    "notifications": "اعلانات و صداها",
+    "privacy_security": "حریم خصوصی و امنیت",
+    "language": "زبان",
+    "help_title": "راهنما",
+    "ask_question": "پرسیدن سوال",
+    "faq": "پرسش‌های متداول پلکسی",
+    "privacy_policy": "سیاست حریم خصوصی",
+    "english": "English",
+    "persian": "Persian",
+    "delete_account": "حذف حساب کاربری",
+    "current_plan": "اشتراک فعلی",
+    "free_plan": "اشتراک رایگان",
+    "collections": "کالکشن‌ها",
+    "folders": "پوشه‌ها"
+  },
+  "channel_detail": {
+    "pnl": "سود و زیان",
+    "active": "فعال",
+    "entry": "ورود",
+    "tp": "هدف",
+    "sl": "حد ضرر",
+    "copy_signal": "کپی سیگنال",
+    "subscriber_count": "{{count}} مشترک",
+    "subscribers": "مشترک",
+    "accuracy": "آنالیز",
+    "reviews": "{{count}} نظر",
+    "reviews_k": "{{count}}K نظر",
+    "risk": "ریسک",
+    "analyze": "آنالیز",
+    "tabs": {
+      "signals": "سیگنال‌ها",
+      "about": "توضیحات",
+      "reviews": "نظرات"
+    },
+    "join": "پیوستن",
+    "unsubscribe": "لغو دنبال",
+    "subscribe": "دنبال کردن",
+    "share": "اشتراک‌گذاری",
+    "mute": "بی‌صدا کردن",
+    "analysis_required": {
+      "title": "نیاز به آنالیز",
+      "credits_left": "شما {{credits}} آنالیز رایگان دیگر در این ماه دارید.",
+      "analyze_button": "برای مشاهده نتایج آنالیز کنید"
+    },
+    "risk_tooltip": {
+      "low": "ریسک کم (۱-۱۰x)",
+      "medium": "ریسک متوسط (۱۰-۲۵x)",
+      "high": "ریسک بالا (۲۵-۱۰۰x)"
+    },
+    "no_signals": "هیچ سیگنالی برای این کانال یافت نشد.",
+    "no_reviews": "هنوز نظری ثبت نشده است.",
+    "toast": {
+      "joining_demo_title": "پیوستن به کانال (آزمایشی)",
+      "joining_demo_desc": "شما درخواست پیوستن به {{channelName}} را دادید.",
+      "unsubscribed": "از {{channelName}} لغو دنبال شدید",
+      "subscribed": "{{channelName}} دنبال شد",
+      "no_credits_title": "اعتبار باقی نمانده",
+      "no_credits_desc": "شما تمام آنالیزهای رایگان این ماه خود را استفاده کرده‌اید. برای آنالیز بیشتر، اشتراک خود را ارتقا دهید.",
+      "analysis_success_title": "آنالیز موفقیت‌آمیز بود!",
+      "analysis_success_desc": "اکنون می‌توانید جزئیات کانال را مشاهده کنید. شما {{newCredits}} اعتبار دیگر دارید."
+    },
+    "analyze_dialog": {
+      "title": "آنالیز کانال",
+      "description": "آیا مطمئن هستید که می‌خواهید یکی از اعتبارهای خود را برای آنالیز این کانال استفاده کنید؟",
+      "cancel": "لغو",
+      "confirm": "بله، آنالیز کن"
+    },
+    "unsubscribe_dialog": {
+      "title": "لغو دنبال کردن",
+      "description": "مطمئنید می‌خواهید دیگر {{channelName}} را دنبال نکنید؟",
+      "cancel": "انصراف",
+      "confirm": "لغو دنبال کردن"
+    }
+  },
+  "dashboard": {
+    "title": "داشبورد",
+    "welcome": "خوش آمدید، {{username}}!",
+    "welcome_prefix": "خوش آمدید، ",
+    "summary_subtitle": "این خلاصه معاملات شماست.",
+    "free_plan": "اشتراک رایگان",
+    "upgrade": "ارتقا دهید",
+    "free_plan_desc": "شما در طرح رایگان هستید. برای امکانات بیشتر ارتقا دهید.",
+    "analysis_stats": "آمار آنالیز",
+    "analyzed_channels": "کانال‌های آنالیز شده",
+    "remaining_credits": "اعتبار باقی‌مانده",
+    "view_reports": "مشاهده گزارشات",
+    "subscribed_channels": "کانال‌های دنبال شده",
+    "view": "مشاهده",
+    "subscribed_signals": "سیگنال‌های دنبال شده",
+    "no_active_signals": "هیچ سیگنال فعالی از کانال‌های دنبال شده شما وجود ندارد.",
+    "browse_channels": "مرور کانال‌ها",
+    "coming_soon_title": "به زودی",
+    "coming_soon_desc": "ویژگی گزارش‌های تحلیلی در حال توسعه است."
+  },
+  "your_channels": {
+    "title": "کالکشن‌ها",
+    "search_placeholder": "جست و جو در لیست کانال ها",
+    "your_lists": "لیست‌های شما",
+    "recently_added": "اخیراً اضافه شده",
+    "create_list_title": "ایجاد پوشه جدید",
+    "create_list_desc": "برای سازماندهی لیست تماشای خود، نامی برای لیست جدید خود وارد کنید.",
+    "list_name_label": "نام",
+    "list_name_placeholder": "مثال: الماس‌های دیفای",
+    "create_button": "ایجاد لیست",
+    "empty_state_title": "لیست تماشای شما خالی است",
+    "empty_state_desc": "برای پیگیری کانال‌ها، آن‌ها را به لیست تماشای خود اضافه کنید.",
+    "browse_channels_button": "مرور کانال‌ها",
+    "rename_list_title": "تغییر نام لیست",
+    "rename_list_desc": "یک نام جدید برای لیست \"{{folderName}}\" وارد کنید.",
+    "save_button": "ذخیره",
+    "delete_list_title": "آیا مطمئن هستید؟",
+    "delete_list_desc": "این کار لیست \"{{folderName}}\" را برای همیشه حذف خواهد کرد. این عمل قابل بازگشت نیست.",
+    "delete_button": "حذف",
+    "cancel_button": "لغو",
+    "toast_channel_removed": "کانال حذف شد",
+    "toast_channel_removed_desc": "کانال از لیست تماشای شما حذف شد.",
+    "toast_list_created": "پوشه ایجاد شد",
+    "toast_list_created_desc": "پوشه \"{{folderName}}\" ایجاد شد.",
+    "toast_invalid_name": "نام پوشه نمی‌تواند خالی باشد.",
+    "toast_list_renamed": "نام لیست تغییر کرد",
+    "toast_list_deleted": "لیست حذف شد",
+    "loading": "در حال بارگذاری لیست تماشا...",
+    "add_channels_title": "افزودن کانال‌ها"
+  },
+  "folders_page": {
+    "title": "پوشه‌ها",
+    "description": "برای گروه‌های مختلف گفتگو پوشه ایجاد کنید و به سرعت بین آن‌ها جابجا شوید.",
+    "save_order": "ترتیب ذخیره شد",
+    "save_order_desc": "ترتیب جدید پوشه‌های شما ذخیره شد.",
+    "list_title": "پوشه‌ها",
+    "create_folder": "ایجاد پوشه جدید",
+    "rename": "تغییر نام",
+    "delete": "حذف"
+  }
+}
+
+    

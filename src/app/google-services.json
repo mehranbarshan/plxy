@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "788537831140",
+    "projectid": "gaminvest",
+    "storage_bucket": "gaminvest.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_appid": "1:788537831140:android:dedcb93888d88f7561c6f1",
+        "android_client_info": {
+          "package_name": "Gaminvest.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "clientid": "788537831140-26hpep71s1vv0ra3mi9ble3gkc0b6e2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoPfsjNNFCdKk7YEz_KUstEYe-FNfOh_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "clientid": "788537831140-26hpep71s1vv0ra3mi9ble3gkc0b6e2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_appid": "1:788537831140:android:53b12927633665cd61c6f1",
+        "android_client_info": {
+          "package_name": "Gaminvest.v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "clientid": "788537831140-26hpep71s1vv0ra3mi9ble3gkc0b6e2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoPfsjNNFCdKk7YEz_KUstEYe-FNfOh_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "clientid": "788537831140-26hpep71s1vv0ra3mi9ble3gkc0b6e2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

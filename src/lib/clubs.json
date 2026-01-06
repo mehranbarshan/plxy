@@ -1,0 +1,22 @@
+
+[
+  {
+    "id": "crypto-pioneers",
+    "name": "Crypto Pioneers",
+    "description": "A club for the brave and bold, charting the future of crypto.",
+    "badgeUrl": "/badges/pioneers.png",
+    "requiredTrophies": 1000,
+    "members": [
+      "user-123",
+      "user-456"
+    ]
+  },
+  {
+    "id": "whale-watchers",
+    "name": "Whale Watchers",
+    "description": "Following the big moves in the market.",
+    "badgeUrl": "/badges/whales.png",
+    "requiredTrophies": 5000,
+    "members": []
+  }
+]

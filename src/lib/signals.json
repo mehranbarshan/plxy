@@ -1,0 +1,26 @@
+
+[
+  {
+    "id": "btc-long-1",
+    "userId": "user-123",
+    "ticker": "BTCUSDT",
+    "tradeType": "Long",
+    "status": "active",
+    "entryPrice": 68000,
+    "leverage": 20,
+    "createdAt": "2024-05-20T10:00:00Z"
+  },
+  {
+    "id": "eth-short-1",
+    "userId": "user-456",
+    "ticker": "ETHUSDT",
+    "tradeType": "Short",
+    "status": "closed",
+    "entryPrice": 3800,
+    "closePrice": 3700,
+    "pnl": 150.75,
+    "leverage": 10,
+    "createdAt": "2024-05-19T14:30:00Z",
+    "closedAt": "2024-05-20T09:00:00Z"
+  }
+]

@@ -1,0 +1,38 @@
+
+"use client"
+
+import { useToast } from "@/hooks/use-toast"
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@/components/ui/toast"
+import { useTranslation } from "@/context/LanguageContext"
+
+export function Toaster() {
+  const { toasts } = useToast()
+  const { language } = useTranslation()
+
+  return (
+    <ToastProvider>
+      {toasts.map(function ({ id, title, description, action, ...props }) {
+        return (
+          <Toast key={id} {...props} dir={language === 'fa' ? 'rtl' : 'ltr'}>
+            <div className="grid gap-1">
+              {title && <ToastTitle>{title}</ToastTitle>}
+              {description && (
+                <ToastDescription>{description}</ToastDescription>
+              )}
+            </div>
+            {action}
+            <ToastClose dir={language === 'fa' ? 'rtl' : 'ltr'} />
+          </Toast>
+        )
+      })}
+      <ToastViewport dir={language === 'fa' ? 'rtl' : 'ltr'} />
+    </ToastProvider>
+  )
+}
